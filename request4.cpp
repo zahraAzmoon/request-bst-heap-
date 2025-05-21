@@ -4,10 +4,10 @@ using namespace std;
 
 struct Node{
     int id;
-    string name;
-    Node* left;
-    Node* right;
-    Node* parent;
+    string name ;
+    Node* left ;
+    Node* right ;
+    Node* parent ;
 
     Node(int id, string name){
        this->id=id;
@@ -191,6 +191,13 @@ public:
           }
           cout<<endl;
       }
+      int find_i(int id) {
+          for (int i = 1; i <= size; i++) {
+              if (heap[i].id == id)
+                  return i;
+          }
+          return -1;
+      }
 
 };
 
@@ -207,24 +214,25 @@ int main(){
         cout << "4- higher priority " << endl;
         cout << "5-show bst " << endl;
         cout << "6-show maxhap " << endl;
-        cout << "7-exit " << endl;
-        cout << "please enter a number between 1 to 7 : "<<endl;
+        cout << "7-increase priority " << endl;
+        cout << "8-exit" << endl;
+        cout << "please enter a number between 1 to 8 : "<<endl;
         cout << "____________________________________________" << endl;
         cin >> choice;
         // امتحان میکنیم
         if (cin.fail()) {
             cin.clear();
             cin.ignore(1000);
-            cout << "pleas enter between 1 to 7" << endl;
+            cout << "pleas enter between 1 to 8" << endl;
             continue;
         }
         // تا اینجا
-        if (choice == 7) break;
+        if (choice == 8) break;
        
         int id, priority;
         string name;
 
-        switch (choice){
+        switch (choice) {
         case 1:
             cout << "*isert*" << endl;
             cout << "id: ";
@@ -243,19 +251,19 @@ int main(){
             cout << "id for searching: ";
             cin >> id;
             {
-            Node* searching = bst.tree_search(bst.root, id);
-           // if (bst.tree_search(bst.root, id))
-                 if (searching) {
-                       cout << "request is founding" << endl;//oooo
-                       cout << "id:" << searching->id << "   name:" << searching->name << endl;
-                  }
-                 else {
-                      cout << "request not found" << endl;
-                 }
+                Node* searching = bst.tree_search(bst.root, id);
+                // if (bst.tree_search(bst.root, id))
+                if (searching) {
+                    cout << "request is founding" << endl;//oooo
+                    cout << "id:" << searching->id << "   name:" << searching->name << endl;
+                }
+                else {
+                    cout << "request not found" << endl;
+                }
             }
             cout << "_______________________" << endl;
 
-                break;
+            break;
 
         case 3:
             cout << "id foe delete: ";
@@ -292,10 +300,31 @@ int main(){
             cout << "_______________________" << endl;
 
             break;
-         
-       // case 7:
-         //   cout << "exiting" << endl;
-          //  break;
+
+        case 7:
+            cout << "id: ";
+            cin >> id;
+            cout << "priority new: ";
+            cin >> priority;
+            {
+                int k = heap.find_i(id);
+                if (k == -1) {
+                    cout << "not found" << endl;
+                }
+                else {
+                    if (priority > heap.heap[k].priority) {
+                        heap.heap_increase_key(k, priority);
+                        cout << "priority updated" << endl;
+                    else {
+                        cout << "new priority is smaller" << endl;
+                    }
+
+                    cout << "_______________________" << endl;
+
+                    }
+                }
+            }
+            break;
         default:
             cout << "invalid" << endl;
 
